@@ -1,7 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const session = require('express-session');
+const passport = require('passport');
 const connectDB = require("./config/db");
+require('./services/googleAuth');
 
 connectDB();
 
@@ -13,9 +16,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
-require("./routes/auth/login")(app);
-require("./routes/auth/signup")(app);
-require("./routes/forumPost")(app);
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'SECRET' 
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require("./routes/authRoutes")(app);
+// require("./routes/forumPost")(app);
 
 const PORT = process.env.PORT || 5000;
 

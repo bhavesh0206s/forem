@@ -1,6 +1,5 @@
 module.exports = {
-  jwtSecret: "fjsadfsdlfkleofvdvmtuy5343skvmjfkj",
-  // googleClientID: '467702790820-s0u6sis67ec5qejumveermfkqfov16mq.apps.googleusercontent.com',
-  // googleClentSecret: 'RSNNmQVy2fyyI1_2W9XxGE6z',
-  mongoURI: 'mongodb+srv://canteen:canteen@canteen.fwafs.mongodb.net/canteen?retryWrites=true&w=majority',
+  googleClientID: '1083414167123-5ehcg3k81a1oc7chl6ftvoovmgtooq7f.apps.googleusercontent.com',
+  googleClentSecret: 'tw51y3jtoRWBn8fgod46-bPK',
+  mongoURI: 'mongodb+srv://forem:forem@cluster0.kkewz.mongodb.net/<dbname>?retryWrites=true&w=majority',
 }

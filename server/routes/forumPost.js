@@ -1,14 +1,16 @@
+const verifyLogin = require('../middleware/verifyLogin');
 const ForumPost = require('../modals/ForumPost');
-const StudentUser = require('../modals/StudentUser');
+const User = require('../modals/User');
 
 module.exports = (app) => {
 
   app.post(
     '/api/forum/post/:type',
+    verifyLogin,
     async (req, res) => {
       try {
         const postType = req.params.type;
-        const user = await StudentUser.findById(req.user.id).select('-password');
+        const user = await User.findById(req.user.id)
 
         const newPost = new ForumPost({
           type: postType,
@@ -28,7 +30,7 @@ module.exports = (app) => {
     }
   );
   
-  app.get('/api/forum/post/:type', verify, async (req, res) => {
+  app.get('/api/forum/post/:type', verifyLogin, async (req, res) => {
     try {
       const postType = req.params.type;
       let posts;
@@ -44,7 +46,7 @@ module.exports = (app) => {
     }
   });
   
-  app.get('/api/forum/post/:id', verify, async (req, res) => {
+  app.get('/api/forum/post/:id', verifyLogin, async (req, res) => {
     try {
       const post = await ForumPost.findById(req.params.id);
   
@@ -60,7 +62,7 @@ module.exports = (app) => {
     }
   });
   
-  app.delete('/api/forum/post/:id', verify, async (req, res) => {
+  app.delete('/api/forum/post/:id', verifyLogin, async (req, res) => {
     try {
       const post = await ForumPost.findById(req.params.id);
   
@@ -87,9 +89,10 @@ module.exports = (app) => {
 
   app.post(
     'api/forum/post/comment/:id',
+    verifyLogin,
     async (req, res) => {
       try {
-        const user = await StudentUser.findById(req.user.id).select('-password');
+        const user = await User.findById(req.user.id).select('-password');
         const post = await ForumPost.findById(req.params.id);
   
         const newComment = {
@@ -110,7 +113,7 @@ module.exports = (app) => {
     }
   );
   
-  app.delete('api/forum/post/comment/:id/:comment_id', verify, async (req, res) => {
+  app.delete('api/forum/post/comment/:id/:comment_id', verifyLogin, async (req, res) => {
     try {
       const post = await ForumPost.findById(req.params.id);
   
@@ -140,7 +143,7 @@ module.exports = (app) => {
     }
   });
 
-  // app.put('/like/:id', verify, async (req, res) => {
+  // app.put('/like/:id', verifyLogin, async (req, res) => {
   //   try {
   //     const post = await Post.findById(req.params.id);
   
@@ -163,7 +166,7 @@ module.exports = (app) => {
   //   }
   // });
   
-  // app.put('/unlike/:id', verify, async (req, res) => {
+  // app.put('/unlike/:id', verifyLogin, async (req, res) => {
   //   try {
   //     const post = await Post.findById(req.params.id);
   
