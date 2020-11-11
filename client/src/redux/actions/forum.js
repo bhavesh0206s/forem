@@ -10,7 +10,7 @@ export const addForumPost = (details, type) => async (dispatch) => {
   const body = JSON.stringify(details);
   console.log(body, type)
   try {
-    const res = await axios.post(`http://127.0.0.1:5000/api/forum/post/${type}`, body, config);
+    const res = await axios.post(`/api/forum/post/${type}`, body, config);
 
     dispatch(fetchAllForumPost());
 
@@ -21,7 +21,7 @@ export const addForumPost = (details, type) => async (dispatch) => {
 
 export const fetchAllForumPost = (type) => async (dispatch) => {
   try {
-    const res = await axios.get('http://127.0.0.1:5000/api/forum/post');
+    const res = await axios.get('/api/forum/post');
 
     dispatch({
       type: SHOW_FORUM_POST,
@@ -34,7 +34,7 @@ export const fetchAllForumPost = (type) => async (dispatch) => {
 
 export const fetchTopicWiseForumPost = (type) => async (dispatch) => {
   try {
-    const res = await axios.get(`http://127.0.0.1:5000/api/forum/post/${type}`);
+    const res = await axios.get(`/api/forum/post/${type}`);
     console.log(res.data)
     dispatch({
       type: SHOW_TOPIC_WISE_FORUM_POST,
