@@ -1,0 +1,31 @@
+.landing__content{
+  margin: 20px 100px;
+  display: flex;
+  flex-direction: row;
+}
+
+.left__side-menu{
+  padding-bottom: 2em;
+}
+
+#components-layout-demo-top-side .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+#components-layout-demo-fixed-sider .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+@media (max-width: 767px) {
+  .landing__content{
+    margin: 20px 10px 20px 0px;
+  }
+}
