@@ -14,23 +14,16 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons';
 
-const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
 const Landing = () => {
 
   const [collapsed, setCollapsed] = useState(false);
-  const [contentLeftMargin, setContentLeftMargin] = useState(200);
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'
   });
   const onCollapse = collapsed => {
     setCollapsed(collapsed);
-    if(collapsed){
-      setContentLeftMargin(80)
-    }else{
-      setContentLeftMargin(200)
-    }
   }
 
   return (
@@ -114,7 +107,8 @@ const Landing = () => {
           </Menu>
         </Sider>
         )}
-        <Layout className="site-layout" style={{ marginLeft: contentLeftMargin }}>
+        <Layout className="site-layout" 
+          style={{ marginLeft: isTabletOrMobileDevice? 0 : 200, marginTop: isTabletOrMobileDevice? 60 : 0}}>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div className="site-layout-background" style={{ padding: 24 }}>
               ...
