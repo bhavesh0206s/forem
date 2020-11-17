@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import LeftMenu from './LeftMenu'
 import { useMediaQuery } from 'react-responsive'
 import RightMenu from './RightMenu'
 import { Drawer, Button, Input } from 'antd';
 import './nav.css';
 import mainLogo from '../../assets/logo_transparent.png'
+import ProfileCard from '../profile/ProfileCard';
 
 const { Search } = Input;
 const Navbar = () => {
@@ -62,6 +62,7 @@ const Navbar = () => {
           visible={visible}
         >
           <RightMenu />
+          <ProfileCard />
         </Drawer>
       </div>
     </nav>
