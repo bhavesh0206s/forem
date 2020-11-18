@@ -177,7 +177,7 @@ const Forum = ({ match }) => {
         <div className='container'>
           {!hideMain && forumPost.map(item => <ForumPost item={item} />)}
           <Switch>
-            <Route exact path='/forum/:topics' component={TopicDetails} />
+            <Route path='/forum/:topics' component={TopicDetails} />
             <Route path='/forum/:topics/:id' component={SelectedTopicDetails} />
           </Switch>
         </div>

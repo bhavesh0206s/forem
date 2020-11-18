@@ -8,9 +8,8 @@ import ProfileCard from '../profile/ProfileCard';
 import { Link } from 'react-router-dom';
 import AddPost from '../forum/AddPost';
 
-const { Search } = Input;
 const Navbar = () => {
-  const [current, setCurrent] = useState('mail');
+
   const [visible, setVisible] = useState(false); 
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
@@ -45,7 +44,7 @@ const Navbar = () => {
         setVisibleModal={setVisibleModal}
       />
       <div className="logo">
-        <Link to='/'>
+        <Link to='/home'>
           forem
         </Link>
       </div>

@@ -1,6 +1,7 @@
 import { Card, Avatar, Button } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive';
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -28,7 +29,9 @@ const ProfileCard = ({setIsYourPostClicked}) => {
         />
       }
       actions={[
-        <Button onClick={() => setIsYourPostClicked(true)}>Your Post</Button>,
+        <Link to='/home/my-posts'>
+          <Button>Your Post</Button>
+        </Link>,
       ]}
     >
       <Meta

@@ -8,6 +8,10 @@
 .signup-card{
   width: 50em;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .google-signup{

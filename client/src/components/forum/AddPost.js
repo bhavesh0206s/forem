@@ -1,11 +1,17 @@
 import { DownOutlined } from '@ant-design/icons';
-import { Modal, Button, Input, Menu, Dropdown } from 'antd';
+import { Modal, Button, Input, Menu, Dropdown, Tag } from 'antd';
 import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 const { TextArea } = Input;
 
 const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading}) => {
 
   const [selectedTags, setSelectedTags] = useState([])
+
+  const isTabletOrMobileDevice = useMediaQuery({
+    query: '(max-device-width: 1224px)'
+  });
+
 
   const handleOk = () => {
     setConfirmLoading(true);
@@ -46,27 +52,32 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
 
   return (
     <Modal
-        title={<Input placeholder="New post title here..." style={{width: '18em',fontSize: '1.5em'}}/>}
-        visible={visibleModal}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-        width={700}
-      >
-        <TextArea placeholder='Post content...' rows={5} />
-        <Dropdown overlay={topics}>
-          <Button style={{marginTop: 10}} >
-            Select Tags <DownOutlined />
-          </Button>
-        </Dropdown>
-        <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap'}}>
-          {selectedTags.map(tag => (
-            <div  onClick={handleRemoveTag} className='selected-tag'>
-              {tag}
-            </div>
-          ))}
-        </div>
-      </Modal>
+      title={
+        <Input 
+          placeholder="New post title here..." 
+          style={!isTabletOrMobileDevice ?  {width: '18em',fontSize: '1.5em'} : {width: '11em',fontSize: '1.1em'}}
+        />
+      }
+      visible={visibleModal}
+      onOk={handleOk}
+      confirmLoading={confirmLoading}
+      onCancel={handleCancel}
+      width={700}
+    >
+      <TextArea placeholder='Post content...' rows={5} />
+      <Dropdown overlay={topics}>
+        <Button style={{marginTop: 10}} >
+          Select Tags <DownOutlined />
+        </Button>
+      </Dropdown>
+      <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap'}}>
+        {selectedTags.map(tag => (
+          <Tag closable onClose={handleRemoveTag} style={{margin: 10}}>
+            {tag}
+          </Tag>
+        ))}
+      </div>
+    </Modal>
   );
 }
  
