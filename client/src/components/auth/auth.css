@@ -1,0 +1,55 @@
+.signup{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.signup-card{
+  width: 50em;
+  text-align: center;
+}
+
+.google-signup{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.google-btn {
+  width: 186px;
+  height: 45px;
+  justify-content: center;
+  background-color: #4285f4;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .25);
+}
+.google-btn .google-icon-wrapper {
+  position: absolute;
+  margin-top: 1px;
+  margin-left: 1px;
+  width: 43px;
+  height: 43px;
+  border-radius: 2px;
+  background-color: #fff;
+}
+.google-btn .google-icon {
+  position: absolute;
+  margin-top: 12px;
+  margin-left: -8px;
+  width: 19px;
+  height: 19px;
+}
+.google-btn .btn-text {
+  float: right;
+  margin: 11px 11px 0 0;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+}
+.google-btn:hover {
+  box-shadow: 0 0 6px #4285f4;
+}
+.google-btn:active {
+  background: #1669f2;
+}

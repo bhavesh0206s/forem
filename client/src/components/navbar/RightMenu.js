@@ -1,4 +1,5 @@
 import { Menu, Grid, Button } from 'antd';
+import { Link } from 'react-router-dom';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -9,10 +10,14 @@ const RightMenu = () => {
   return (
     <Menu mode={md ? "horizontal" : "inline"}>
       <Menu.Item key="mail">
-        <Button>Login</Button>
+        <Link to='/signin'>
+          <Button>Login</Button>
+        </Link>
       </Menu.Item>
       <Menu.Item key="app">
-      <Button type="primary">Create Accound</Button>
+      <Link to='/signup'>
+        <Button type="primary">Create Account</Button>
+      </Link>
       </Menu.Item>
     </Menu>
   );

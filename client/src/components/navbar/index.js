@@ -5,15 +5,20 @@ import { Drawer, Button, Input } from 'antd';
 import './nav.css';
 import mainLogo from '../../assets/logo_transparent.png'
 import ProfileCard from '../profile/ProfileCard';
+import { Link } from 'react-router-dom';
+import AddPost from '../forum/AddPost';
 
 const { Search } = Input;
 const Navbar = () => {
   const [current, setCurrent] = useState('mail');
   const [visible, setVisible] = useState(false); 
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
 
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'
   });
+
 
   const showDrawer = () => {
     setVisible(true)
@@ -27,27 +32,27 @@ const Navbar = () => {
 
   }
 
+  const showModal = () => {
+    setVisibleModal(true);
+  };
+
   return (
     <nav className="menuBar">
+      <AddPost 
+        confirmLoading={confirmLoading}
+        visibleModal={visibleModal}  
+        setConfirmLoading={setConfirmLoading}
+        setVisibleModal={setVisibleModal}
+      />
       <div className="logo">
-        <a href="">forem</a>
-        <div className='searcbBar'>
-          {isTabletOrMobileDevice && (
-            <Search
-              placeholder="input search text"
-              allowClear
-              enterButton="Search"
-              size="large"
-              onSearch={onSearch}
-              style={{width: 100}}
-            />
-          )}
-        </div>
+        <Link to='/'>
+          forem
+        </Link>
       </div>
       <div className="menuCon">
-        {/* <div className="leftMenu">
-          <LeftMenu />
-        </div> */}
+        <div className="leftMenu" style={{marginTop: 9}}>
+          <Button type='primary' onClick={showModal}>Write a post</Button>
+        </div>
         <div className="rightMenu">
           <RightMenu />
         </div>

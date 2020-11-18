@@ -1,10 +1,10 @@
-import { Card, Avatar } from 'antd';
+import { Card, Avatar, Button } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive';
 
 const { Meta } = Card;
 
-const ProfileCard = () => {
+const ProfileCard = ({setIsYourPostClicked}) => {
 
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'
@@ -28,7 +28,7 @@ const ProfileCard = () => {
         />
       }
       actions={[
-        <EditOutlined key="edit" />,
+        <Button onClick={() => setIsYourPostClicked(true)}>Your Post</Button>,
       ]}
     >
       <Meta

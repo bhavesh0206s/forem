@@ -15,16 +15,6 @@
   box-shadow: 0 2px 20px rgba(0,0,0,0.1);
 }
 
-.comment-action {
-  padding-left: 8px;
-  cursor: 'auto';
-}
-
-[class*='-col-rtl'] .comment-action {
-  padding-right: 8px;
-  padding-left: 0;
-}
-
 .card .card-body{
   margin-top: -5px;
   position: relative;

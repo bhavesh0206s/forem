@@ -1,6 +1,6 @@
 import { Layout, Menu, Icon, Breadcrumb } from 'antd';
 import { useMediaQuery } from 'react-responsive';
-import './forumPost.css';
+import './forum.css';
 const { Header, Sider } = Layout;
 
 const TopicMenu = () => {

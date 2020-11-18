@@ -43,11 +43,18 @@ const PostCard = () => {
             />
           }
           content={
-            <p>
-              We supply a series of design principles, practical patterns and high quality design
-              resources (Sketch and Axure), to help people create their product prototypes beautifully
-              and efficiently.
-            </p>
+            <div>
+              <h2>Heading Heading</h2>
+              <p>
+                We supply a series of design principles, practical patterns and high quality design
+                resources (Sketch and Axure), to help people create their product prototypes beautifully
+                and efficiently.
+              </p>
+              <div style={{display: 'flex', padding: 10}}>
+                <p style={{padding: 5, color: 'grey'}}>#<span>javascript</span></p>
+                <p style={{padding: 5, color: 'grey'}}>#<span>javascript</span></p>
+              </div>
+            </div>
           }
           datetime={
             <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>

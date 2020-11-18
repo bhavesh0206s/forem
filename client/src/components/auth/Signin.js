@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './auth.css'
 const { Meta } = Card;
 
-const Signup = () => {
+const Signin = () => {
   return (
     <div className='signup'>
       <Card
@@ -18,16 +18,13 @@ const Signup = () => {
             <div class="google-icon-wrapper">
               <img class="google-icon" alt="signup" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
             </div>
-            <p class="btn-text"><b>Sign up with Google</b></p>
+            <p class="btn-text"><b>Sign in with Google</b></p>
           </div>
         </div>
         <Divider />
-        <div>
-          <p style={{fontSize: '1.2em', color: 'grey'}}>Already have an account? <Link to='/signin'>Signin</Link></p>
-        </div>
       </Card>
     </div>
   );
 }
  
-export default Signup;
+export default Signin;

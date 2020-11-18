@@ -1,0 +1,23 @@
+.comment-action {
+  padding-left: 8px;
+  cursor: 'auto';
+}
+
+[class*='-col-rtl'] .comment-action {
+  padding-right: 8px;
+  padding-left: 0;
+}
+
+.selected-tag{
+  margin: 0.5em;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: .5em;
+}
+
+.selected-tag:hover{
+  cursor: pointer;
+  text-decoration:line-through;
+  text-decoration-color: red;
+  text-decoration-thickness: 2px;
+}
