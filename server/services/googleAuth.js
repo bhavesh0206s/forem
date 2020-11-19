@@ -13,6 +13,7 @@ passport.deserializeUser((id, done)=> {
   })
 })
 
+
 passport.use(
   new GoogleStrategy(
     {
@@ -23,7 +24,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const user =  await User.findOne({googleId: profile.id})
-      console.log(profile)
+
       if(user){
         return done(null, user)
       }
@@ -38,4 +39,4 @@ passport.use(
       done(null, newUser)
     }
   )
-)
+);

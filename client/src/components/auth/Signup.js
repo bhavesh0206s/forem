@@ -18,9 +18,9 @@ const Signup = () => {
             <div class="google-icon-wrapper">
               <img class="google-icon" alt="signup" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
             </div>
-            <Link to='/signup/userForm'>
+            <a href='/auth/google'>
               <p class="btn-text"><b>Sign up with Google</b></p>
-            </Link>
+            </a>
           </div>
         </div>
         <Divider />

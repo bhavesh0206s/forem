@@ -12,6 +12,13 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
+  bio:{
+    type: String,
+  },
+  username:{
+    type: String,
+    default: '',
+  },
   picture: {
     type: String,
   }
