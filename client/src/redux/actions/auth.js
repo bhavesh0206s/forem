@@ -1,27 +1,31 @@
 import {
-  REGISTER_FAIL,
-  REGISTER_SUCCESS,
-  AUTH_ERROR,
-  USER_LOADED,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT
-  // CLEAR_PROFILE,
+  LOGOUT,
+  FETCH_USER
 } from './types'
 import axios from 'axios'
 // import { setAlert } from "./alert";
 
-export const fetchUser = () => dispatch => {
+export const fetchUser =  () => async dispatch => {
   try {
-    const res = axios.get('/api/current_user');
-    console.log(res.data);
+    const res = await axios.get('/api/current_user');
+    dispatch({
+      type: FETCH_USER,
+      payload: res.data
+    })
   } catch (error) {
     
   }
 }
 
-// Logout / Clear Profile
-export const logout = () => dispatch => {
-  // dispatch({ type: CLEAR_PROFILE });
+export const saveUsernameAndBio = (username, bio) => async dispatch =>{
+  try {
+    const res = await axios.post('/api/auth/signup-form', {username, bio});
+    console.log(res.data);
+  } catch (error) {
+    console.log('error from saveUsernameAndBio: ', error)
+  }
+}
+
+export const logout = () => async dispatch => {
   dispatch({ type: LOGOUT })
 }

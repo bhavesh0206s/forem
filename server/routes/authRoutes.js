@@ -1,4 +1,5 @@
 const passport = require('passport');
+const verifyLogin = require('../middleware/verifyLogin');
 const User = require('../modals/User');
 
 module.exports = (app)=>{
@@ -22,13 +23,24 @@ module.exports = (app)=>{
     }
   });
 
+  app.post('/api/auth/signup-form', verifyLogin , async (req, res) =>{
+    try {
+      const user = await User.findById(req.user._id);
+      user.username = req.body.username;
+      user.bio = req.body.bio;
+      await user.save();
+    } catch (error) {
+      console.log('error from signup-form: ', error)
+    }
+  })
+
   app.get('/api/current_user', (req,res)=>{
     res.json(req.user);
-  })
+  });
 
   app.get('/api/logout', (req,res)=>{
     req.logout();
-    res.redirect('/')
-  })
+    res.redirect('/home')
+  });
 
 }

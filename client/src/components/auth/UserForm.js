@@ -1,4 +1,6 @@
 import { Form, Input, InputNumber, Button, Card } from 'antd';
+import {useDispatch} from 'react-redux';
+import { saveUsernameAndBio } from '../../redux/actions/auth';
 
 const layout = {
   labelCol: { span: 8 },
@@ -10,8 +12,12 @@ const validateMessages = {
 };
 
 const UserForm = () => {
+
+  const dispatch = useDispatch();
+
   const onFinish = values => {
-    console.log(values);
+    const {username, bio} = values.user;
+    dispatch(saveUsernameAndBio(username, bio));
   };
 
   return (

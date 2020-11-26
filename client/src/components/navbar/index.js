@@ -5,7 +5,7 @@ import { Drawer, Button, Input } from 'antd';
 import './nav.css';
 import mainLogo from '../../assets/logo_transparent.png'
 import ProfileCard from '../profile/ProfileCard';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import AddPost from '../forum/AddPost';
 
 const Navbar = () => {
@@ -73,4 +73,4 @@ const Navbar = () => {
   );
 }
  
-export default Navbar;
+export default withRouter(Navbar);
