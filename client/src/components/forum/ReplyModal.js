@@ -14,7 +14,6 @@ const ReplyModal = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLo
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setVisibleModal(false);
   };
 

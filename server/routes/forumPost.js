@@ -3,20 +3,21 @@ const ForumPost = require('../modals/ForumPost');
 const User = require('../modals/User');
 
 module.exports = (app) => {
-
+  
   app.post(
-    '/api/forum/post/:type',
+    '/api/forum/post',
     verifyLogin,
     async (req, res) => {
       try {
-        const postType = req.params.type;
-        const user = await User.findById(req.user.id)
 
         const newPost = new ForumPost({
-          type: postType,
-          text: req.body.text,
-          name: user.name,
-          user: req.user.id, // the user={id:fdmfmldm} which comes with token
+          title: req.body.title,
+          content: req.body.content,
+          tags: req.body.tags,
+          name: req.user.name,
+          user: req.user._id, 
+          username: req.user.username,
+          date: new Date(),
         });
   
         const post = await newPost.save();
@@ -29,6 +30,16 @@ module.exports = (app) => {
       }
     }
   );
+
+  app.get('/api/forum/post', async (req, res) => {
+    try {
+      const posts = await ForumPost.find().sort({ date: -1 });
+      res.json(posts);
+    } catch (err) {
+      // console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
   
   app.get('/api/forum/post/:type', verifyLogin, async (req, res) => {
     try {
@@ -39,20 +50,23 @@ module.exports = (app) => {
       }else{
         posts = await ForumPost.findById({type: postType}).sort({ date: -1 });
       }
+      console.log(posts)
       res.json(posts);
     } catch (err) {
       // console.error(err.message);
       res.status(500).send('Server Error');
     }
   });
+
   
-  app.get('/api/forum/post/:id', verifyLogin, async (req, res) => {
+  app.get('/api/forum/my-post/:id', async (req, res) => {
     try {
-      const post = await ForumPost.findById(req.params.id);
+      console.log(req.params.id)
+      const posts = await ForumPost.find({user: req.params.id});
   
-      if (!post) return res.status(400).json({ msg: 'Post not found' });
-  
-      res.json(post);
+      if (!posts) return res.status(400).json({ msg: 'Post not found' });
+
+      res.json(posts);
     } catch (err) {
       console.error(err.message);
       if (err.kind == 'ObjectId') {
@@ -62,7 +76,7 @@ module.exports = (app) => {
     }
   });
   
-  app.delete('/api/forum/post/:id', verifyLogin, async (req, res) => {
+  app.delete('/api/forum/my-post/:id', verifyLogin, async (req, res) => {
     try {
       const post = await ForumPost.findById(req.params.id);
   

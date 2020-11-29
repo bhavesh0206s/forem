@@ -7,10 +7,15 @@ import TopicMenu from './forum/TopicMenu';
 import PostCard from './forum/PostCard';
 import ProfileCard from './profile/ProfileCard';
 import Post from './forum/Post';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchForumPost } from '../redux/actions/forum';
 
 const { Content, Footer } = Layout;
 
 const Home = () => {
+
+  const dispatch = useDispatch();
+  const forum = useSelector(state => state.forum);
   const location = useLocation();
   const [hideHomePost, setHideHomePost] = useState(false);
 
@@ -21,11 +26,13 @@ const Home = () => {
   useEffect(() => {
     if (location.pathname !== '/home') {
       setHideHomePost(true)
+
     } else {
       setHideHomePost(false)
+      dispatch(fetchForumPost());
     }
   }, [location.pathname])
-
+  console.log(forum)
   return (
     <div >  
       <Layout>
@@ -37,18 +44,21 @@ const Home = () => {
               {hideHomePost ? (
                 <Fragment>
                   <Switch>
-                    <Route exact path='/home/my-posts' component={PostCard} />
+                    <Route exact path='/home/my-posts'> 
+                      <Fragment>
+                        {forum.map((post,id) => (
+                          <PostCard key={id} {...post} /> 
+                        ))}
+                      </Fragment>
+                    </Route>
                     <Route path='/home/:username/:postHeading' component={Post} />
                   </Switch>
                 </Fragment>
               ): (
                 <Fragment>
-                  <PostCard />
-                  <PostCard />
-                  <PostCard />
-                  <PostCard />
-                  <PostCard />
-                  <PostCard />
+                  {forum.map((post,id) => (
+                     <PostCard key={id} {...post} /> 
+                  ))}
                 </Fragment>
               )}
             </div>

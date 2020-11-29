@@ -2,14 +2,15 @@ import { Card, Avatar, Button } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Fragment, useEffect } from 'react';
+import { fetchMyForumPost } from '../../redux/actions/forum';
 
 const { Meta } = Card;
 
 const ProfileCard = ({setIsYourPostClicked}) => {
   const user = useSelector(state => state.auth.user);
-
+  const dispatch = useDispatch();
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'
   });
@@ -31,12 +32,14 @@ const ProfileCard = ({setIsYourPostClicked}) => {
           cover={
             <img
               alt="example"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              src="https://source.unsplash.com/random/600x400"
             />
           }
           actions={[
             <Link to='/home/my-posts'>
-              <Button>Your Post</Button>
+              <Button onClick={() => dispatch(fetchMyForumPost(user._id))}>
+                Your Post
+              </Button>
             </Link>,
           ]}
         >

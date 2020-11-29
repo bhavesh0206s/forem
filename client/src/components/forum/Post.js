@@ -2,20 +2,19 @@ import { Comment, Avatar } from 'antd';
 import { useState } from 'react';
 import ReplyModal from './ReplyModal';
 
-const MainPost = ({ children, showModal }) => (
+const MainPost = ({ children, showModal, data }) => (
   <Comment
     actions={[<span onClick={showModal} key="comment-nested-reply-to">Reply to</span>]}
-    author={<a>Han Solo</a>}
+    author={<a>{data.name}</a>}
     avatar={
       <Avatar
         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        alt="Han Solo"
+        alt={data.name}
       />
     }
     content={
       <p>
-        We supply a series of design principles, practical patterns and high quality design
-        resources (Sketch and Axure).
+        {data.content}
       </p>
     }
   >
@@ -23,10 +22,11 @@ const MainPost = ({ children, showModal }) => (
   </Comment>
 );
 
-const Post = ({match}) => {
+const Post = (props) => {
+   
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
-
+  
   const showModal = () => {
     setVisibleModal(true);
   };
@@ -39,11 +39,7 @@ const Post = ({match}) => {
         setConfirmLoading={setConfirmLoading}
         setVisibleModal={setVisibleModal}
       />
-      <MainPost showModal={showModal}>
-        <MainPost showModal={showModal}>
-          <MainPost showModal={showModal}/>
-          <MainPost showModal={showModal}/>
-        </MainPost>
+      <MainPost data={props.location.data} showModal={showModal}>
       </MainPost>
     </div>
   );

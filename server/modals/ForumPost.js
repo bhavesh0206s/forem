@@ -4,23 +4,30 @@ const Schema = mongoose.Schema;
 const ForumPostSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'studentUser'
+    ref: 'User'
   },
-  text: {
+  title: {
     type: String,
     required: true
   },
-  postType: {
-    type: String
+  content: {
+    type: String,
+    required: true
+  },
+  tags: {
+    type: Array
   },
   name: {
+    type: String
+  },
+  username: {
     type: String
   },
   likes: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'studentUser'
+        ref: 'User'
       }
     }
   ],
@@ -28,7 +35,7 @@ const ForumPostSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'studentUser'
+        ref: 'User'
       },
       text: {
         type: String,

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_FORUM_POST, SHOW_FORUM_POST, SHOW_TOPIC_WISE_FORUM_POST } from "./types";
+import { ADD_FORUM_POST, SHOW_FORUM_POST, SHOW_MY_FORUM_POST } from "./types";
 
 export const addForumPost = (details, type) => async (dispatch) => {
   const config = {
@@ -8,21 +8,20 @@ export const addForumPost = (details, type) => async (dispatch) => {
     },
   };
   const body = JSON.stringify(details);
-  console.log(body, type)
+  console.log(body)
   try {
-    const res = await axios.post(`/api/forum/post/${type}`, body, config);
-
-    dispatch(fetchAllForumPost());
+    await axios.post(`/api/forum/post`, body, config);
+    
+    dispatch(fetchForumPost());
 
   } catch (err) {
     console.log("error from add post: ", err);
   }
 };
 
-export const fetchAllForumPost = (type) => async (dispatch) => {
+export const fetchForumPost = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/forum/post');
-
+    const res = await axios.get(`/api/forum/post`);
     dispatch({
       type: SHOW_FORUM_POST,
       payload: res.data,
@@ -32,12 +31,12 @@ export const fetchAllForumPost = (type) => async (dispatch) => {
   }
 };
 
-export const fetchTopicWiseForumPost = (type) => async (dispatch) => {
+export const fetchMyForumPost = (id) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/forum/post/${type}`);
-    console.log(res.data)
+
+    const res = await axios.get(`/api/forum/my-post/${id}`);
     dispatch({
-      type: SHOW_TOPIC_WISE_FORUM_POST,
+      type: SHOW_MY_FORUM_POST,
       payload: res.data,
     });
   } catch (err) {

@@ -1,5 +1,6 @@
 import { Form, Input, InputNumber, Button, Card } from 'antd';
 import {useDispatch} from 'react-redux';
+import { Link } from 'react-router-dom';
 import { saveUsernameAndBio } from '../../redux/actions/auth';
 
 const layout = {
@@ -34,9 +35,11 @@ const UserForm = () => {
             <Input.TextArea />
           </Form.Item>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
+            <Link to='/home'>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Link>
           </Form.Item>
         </Form>
       </Card>

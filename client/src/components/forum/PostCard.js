@@ -4,63 +4,60 @@ import moment from 'moment';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-const PostCard = () => {
+const PostCard = (props) => {
   const [likes, setLikes] = useState(0);
-  const [dislikes, setDislikes] = useState(0);
-  const [action, setAction] = useState(null);
 
-  const [postHeading, setPostHeading] = useState("First post of the app")
+  const [action, setAction] = useState(null);
 
   const like = () => {
     setLikes(1);
-    setDislikes(0);
     setAction('liked');
   };
-
 
   const actions = [
     <Tooltip key="comment-basic-like" title="Like">
       <span onClick={like}>
         {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
-        <span className="comment-action">{likes}</span>
+        <span className="comment-action">{props.likes.length}</span>
       </span>
     </Tooltip>
   ];
 
-  const username = 'bhavesh'
-
   return (
     <div>
-
       <Card hoverable style={{margin: 10}}>
         <Comment
           actions={actions}
-          author={<a>Han Solo</a>}
+          author={<a>{props.name}</a>}
           avatar={
             <Avatar
               src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              alt="Han Solo"
+              alt={props.name}
             />
           }
           content={
             <div>
-              <Link style={{color: 'inherit'}} to={`/home/${username}/${postHeading.toLowerCase().split(' ').join('-')}`}>
-                <h1>Heading Heading</h1>
+              <Link style={{color: 'inherit'}} 
+                to={{
+                  pathname: `/home/${props.username}/${props.title.toLowerCase().split(' ').join('-')}`,
+                  data: props
+                }}
+              >
+                <h1 style={{fontSize: '1.5em'}}>{props.title}</h1>
                 <p>
-                  We supply a series of design principles, practical patterns and high quality design
-                  resources (Sketch and Axure), to help people create their product prototypes beautifully
-                  and efficiently.
+                  {props.content}
                 </p>
               </Link>
               <div style={{display: 'flex', padding: 10}}>
-                <p style={{padding: 5, color: 'grey'}}>#<span>javascript</span></p>
-                <p style={{padding: 5, color: 'grey'}}>#<span>javascript</span></p>
+                {props.tags.map((tag, id) => (
+                  <p key={id} style={{padding: 5, color: 'grey'}}>#<span>{tag}</span></p>
+                ))}
               </div>
             </div>
           }
           datetime={
             <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-              <span>{moment().fromNow()}</span>
+              <span>{moment(props.date).format('Do MMMM YYYY, h:mm a')}</span>
             </Tooltip>
           }
         />

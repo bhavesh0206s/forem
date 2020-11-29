@@ -7,8 +7,11 @@ import mainLogo from '../../assets/logo_transparent.png'
 import ProfileCard from '../profile/ProfileCard';
 import { Link, withRouter } from 'react-router-dom';
 import AddPost from '../forum/AddPost';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   const [visible, setVisible] = useState(false); 
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -49,9 +52,11 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="menuCon">
-        <div className="leftMenu" style={{marginTop: 9}}>
-          <Button type='primary' onClick={showModal}>Write a post</Button>
-        </div>
+        {isAuthenticated && (
+          <div className="leftMenu" style={{marginTop: 9}}>
+            <Button type='primary' onClick={showModal}>Write a post</Button>
+          </div>
+        )}
         <div className="rightMenu">
           <RightMenu />
         </div>

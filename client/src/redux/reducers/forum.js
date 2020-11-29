@@ -1,26 +1,18 @@
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  AUTH_ERROR,
-  USER_LOADED,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
-  ADD_FORUM_POST,
-  SHOW_FORUM_POST,
-  SHOW_TOPIC_WISE_FORUM_POST,
-  // ACCOUNT_DELETED,
+  SHOW_FORUM_POST, SHOW_MY_FORUM_POST,
 } from "../actions/types";
 
 const initialState = [];
 
+// eslint-disable-next-line
 export default (state = initialState, action) => {
+
   const { type, payload } = action;
 
   switch (type) {
     case SHOW_FORUM_POST:
       return payload;
-    case SHOW_TOPIC_WISE_FORUM_POST:
+    case SHOW_MY_FORUM_POST:
       return payload;
     default:
       return state;

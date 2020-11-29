@@ -1,24 +1,45 @@
 import { DownOutlined } from '@ant-design/icons';
-import { Modal, Button, Input, Menu, Dropdown, Tag } from 'antd';
+import { Modal, Button, Input, Menu, Dropdown, Tag, Alert } from 'antd';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import { addForumPost } from '../../redux/actions/forum';
 const { TextArea } = Input;
+
+const errors = {
+  content: 'Please add some content',
+  title: 'Please add title to the post',
+  tag: 'No Tag Selected'
+}
 
 const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading}) => {
 
-  const [selectedTags, setSelectedTags] = useState([])
+  const dispatch = useDispatch();
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [content, setContent] = useState('');
+  const [error, setError] = useState('');
+  const [title, setTitle] = useState('')
+  const [success, setSuccess] = useState(false);
 
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'
   });
 
-
   const handleOk = () => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisibleModal(false);
+    if(!title){
+      setError(errors.title)
+    }
+    else if(!content){
+      setError(errors.content)
+    }
+    else if(selectedTags.length === 0){
+      setError(errors.tag);
+    }else{
+      setConfirmLoading(true);
+      dispatch(addForumPost({title, content, tags: selectedTags}))
       setConfirmLoading(false);
-    }, 2000);
+      setSuccess(true);
+    }
   };
 
   const handleRemoveTag = (e) =>{
@@ -28,24 +49,38 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
   }
 
   const handleSelectedTags = (e) =>{
-    setSelectedTags([...selectedTags, e.target.textContent])
+    let tag = e.target.textContent;
+    if(selectedTags.indexOf(tag) === -1){
+      setSelectedTags([...selectedTags, tag]);
+      setError('')
+    }
+  }
+
+  const handleTitle = (e) =>{
+    setTitle(e.target.value)
+    setError('')
+  }
+  const handleContent = (e) =>{
+    setContent(e.target.value)
+    setError('')
   }
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
+    setContent('');
+    setTitle('');
+    setError('')
+    setSelectedTags([]);
     setVisibleModal(false);
+    setSuccess(false)
   };
 
   const topics = (
     <Menu>
       <Menu.Item >
-        <span onClick={handleSelectedTags}>1st menu item</span>
+        <span onClick={handleSelectedTags}>JavaScript</span>
       </Menu.Item>
       <Menu.Item>
-        <span onClick={handleSelectedTags}>2st menu item</span>
-      </Menu.Item>
-      <Menu.Item>
-        <span onClick={handleSelectedTags}>3st menu item</span>
+        <span onClick={handleSelectedTags}>Python</span>
       </Menu.Item>
     </Menu>
   );
@@ -54,6 +89,8 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
     <Modal
       title={
         <Input 
+          onChange={handleTitle}
+          value={title}
           placeholder="New post title here..." 
           style={!isTabletOrMobileDevice ?  {width: '18em',fontSize: '1.5em'} : {width: '11em',fontSize: '1.1em'}}
         />
@@ -64,19 +101,35 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
       onCancel={handleCancel}
       width={700}
     >
-      <TextArea placeholder='Post content...' rows={5} />
+      <TextArea 
+        onChange={handleContent} 
+        value={content}
+        placeholder='Post content...' 
+        rows={3} 
+      />
       <Dropdown overlay={topics}>
         <Button style={{marginTop: 10}} >
           Select Tags <DownOutlined />
         </Button>
       </Dropdown>
-      <div style={{display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap'}}>
-        {selectedTags.map(tag => (
-          <Tag closable onClose={handleRemoveTag} style={{margin: 10}}>
+      <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        {selectedTags.map((tag,id)=> (
+          <Tag key={id} closable onClose={handleRemoveTag} style={{margin: 10}}>
             {tag}
           </Tag>
         ))}
       </div>
+      {error && (
+        <Alert
+          message="Error"
+          description={error}
+          type="error"
+          showIcon
+        />
+      )}
+      {success && (
+        <Alert message="Success" type="success" showIcon />
+      )}
     </Modal>
   );
 }
