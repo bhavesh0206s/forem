@@ -2,17 +2,20 @@ import { Layout, Menu, Icon, Breadcrumb, Button } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import Modal from 'antd/lib/modal/Modal';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import { addTag } from '../../redux/actions/forum';
 import './forum.css';
 const { Header, Sider } = Layout;
 
-const TopicMenu = () => {
+const TagMenu = () => {
 
+  const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
+  const [tag, setTag] = useState('')
 
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'
@@ -20,16 +23,19 @@ const TopicMenu = () => {
 
   const handleOk = () => {
     setConfirmLoading(true);
-    setTimeout(() => {
-      setVisibleModal(false);
-      setConfirmLoading(false);
-    }, 2000);
+    setVisibleModal(false);
+    dispatch(addTag({tag}))
+    setConfirmLoading(false);
   };
 
   const handleCancel = () => {
     setVisibleModal(false);
   };
 
+  const handleTag = (e) => {
+    let t = e.target.value.replace(/ +/g, "");
+    setTag(t);
+  }
 
   const renderAddTopicModal = () => (
     <Modal
@@ -40,14 +46,14 @@ const TopicMenu = () => {
       onCancel={handleCancel}
       width={300}
     >
-    <TextArea placeholder='Create Tag here...' rows={1} />
+    <TextArea onChange={handleTag}  placeholder='Create Tag here...' rows={1} />
   </Modal>
   )
 
   const renderAddTopic = () => (
-    <Menu.Item key='add_topic'>
+    <div style={{margin: 20}}>
       <Button onClick={() => setVisibleModal(true)}>Add Topic</Button>
-    </Menu.Item>
+    </div>
   )
 
   return (
@@ -89,4 +95,4 @@ const TopicMenu = () => {
   );
 }
  
-export default TopicMenu;
+export default TagMenu;

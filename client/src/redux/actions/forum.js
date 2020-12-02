@@ -43,3 +43,23 @@ export const fetchMyForumPost = (id) => async (dispatch) => {
     console.log("error from add post: ", err);
   }
 };
+
+export const addTag = (tag) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(tag);
+  console.log(body)
+  try {
+    await axios.post(`/api/forum/tag`, body, config);
+    // dispatch({
+    //   type: SHOW_MY_FORUM_POST,
+    //   payload: res.data,
+    // });
+  } catch (err) {
+    console.log("error from add post: ", err);
+  }
+};
+

@@ -3,12 +3,12 @@ import { Link, Route, Router, Switch, useLocation } from 'react-router-dom'
 import { Layout } from 'antd';
 import { useMediaQuery } from 'react-responsive'
 import './landing.css'
-import TopicMenu from './forum/TopicMenu';
 import PostCard from './forum/PostCard';
 import ProfileCard from './profile/ProfileCard';
 import Post from './forum/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchForumPost } from '../redux/actions/forum';
+import TagMenu from './forum/TagMenu';
 
 const { Content, Footer } = Layout;
 
@@ -31,12 +31,12 @@ const Home = () => {
       setHideHomePost(false)
       dispatch(fetchForumPost());
     }
-  }, [location.pathname])
-  console.log(forum)
+  }, [location.pathname]);
+
   return (
     <div >  
       <Layout>
-        <TopicMenu />
+        <TagMenu />
         <Layout className="site-layout" 
           style={{ marginLeft: isTabletOrMobileDevice? 0 : 200, marginTop: isTabletOrMobileDevice? 60 : 0, marginRight: isTabletOrMobileDevice? 0 : 400}}>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>

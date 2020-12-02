@@ -61,7 +61,6 @@ module.exports = (app) => {
   
   app.get('/api/forum/my-post/:id', async (req, res) => {
     try {
-      console.log(req.params.id)
       const posts = await ForumPost.find({user: req.params.id});
   
       if (!posts) return res.status(400).json({ msg: 'Post not found' });
