@@ -1,9 +1,10 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Modal, Button, Input, Menu, Dropdown, Tag, Alert } from 'antd';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDebugValue, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { addForumPost } from '../../redux/actions/forum';
+import { fetchTags } from '../../redux/actions/tags';
 const { TextArea } = Input;
 
 const errors = {
@@ -15,11 +16,14 @@ const errors = {
 const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading}) => {
 
   const dispatch = useDispatch();
+  
+  const tags = useSelector(state => state.tags);
+
   const [selectedTags, setSelectedTags] = useState([]);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
-  const [title, setTitle] = useState('')
   const [success, setSuccess] = useState(false);
+  const [title, setTitle] = useState('')
 
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'
@@ -49,10 +53,10 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
   }
 
   const handleSelectedTags = (e) =>{
-    let tag = e.target.textContent;
+    let tag = e.key;
     if(selectedTags.indexOf(tag) === -1){
       setSelectedTags([...selectedTags, tag]);
-      setError('')
+      setError('');
     }
   }
 
@@ -74,16 +78,19 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
     setSuccess(false)
   };
 
-  const topics = (
+  const menu = (
     <Menu>
-      <Menu.Item >
-        <span onClick={handleSelectedTags}>JavaScript</span>
-      </Menu.Item>
-      <Menu.Item>
-        <span onClick={handleSelectedTags}>Python</span>
-      </Menu.Item>
+      {tags.map((tag, i) => (
+        <Menu.Item key={tag} onClick={handleSelectedTags}>
+          {tag}
+        </Menu.Item>
+      ))}
     </Menu>
   );
+
+  useEffect(() => {
+    dispatch(fetchTags());
+  },[])
 
   return (
     <Modal
@@ -107,7 +114,7 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
         placeholder='Post content...' 
         rows={3} 
       />
-      <Dropdown overlay={topics}>
+      <Dropdown overlay={menu}>
         <Button style={{marginTop: 10}} >
           Select Tags <DownOutlined />
         </Button>

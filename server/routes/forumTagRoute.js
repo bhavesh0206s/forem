@@ -45,7 +45,7 @@ module.exports = (app)=>{
             tags.tags.push(newUserTag)
           }
         }else{
-          res.json({errorTag: 'Tag already present!'})
+          res.json({errorTag: ['Tag already present!']})
         }
         await tags.save();
         res.json(Tag)
@@ -59,8 +59,13 @@ module.exports = (app)=>{
   app.get('/api/forum/tag', async (req, res) => {
     try{
       let tags = await Tag.findOne();
-      console.log(tags.tags)
-      // res.json(tags.tags)
+      let temp = [];
+      tags.tags.forEach(tag => {
+        tag.userTags.forEach(userTag => {
+          temp.push(userTag)
+        })
+      });
+      res.json(temp)
     }catch(e){
       console.log('error from get forum tag: ', e)
     }

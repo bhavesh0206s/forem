@@ -26,7 +26,6 @@ const Home = () => {
   useEffect(() => {
     if (location.pathname !== '/home') {
       setHideHomePost(true)
-
     } else {
       setHideHomePost(false)
       dispatch(fetchForumPost());
@@ -40,10 +39,17 @@ const Home = () => {
         <Layout className="site-layout" 
           style={{ marginLeft: isTabletOrMobileDevice? 0 : 200, marginTop: isTabletOrMobileDevice? 60 : 0, marginRight: isTabletOrMobileDevice? 0 : 400}}>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div className="site-layout-background" style={{ padding: 24 }}>
+            <div className="site-layout-background" style={{ padding: 4 }}>
               {hideHomePost ? (
                 <Fragment>
                   <Switch>
+                    <Route path='/home/:tag'>
+                      <Fragment>
+                        {forum.map((post,id) => (
+                          <PostCard key={id} {...post} /> 
+                        ))}
+                      </Fragment>
+                    </Route>
                     <Route exact path='/home/my-posts'> 
                       <Fragment>
                         {forum.map((post,id) => (

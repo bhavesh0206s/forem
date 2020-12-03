@@ -41,16 +41,10 @@ module.exports = (app) => {
     }
   });
   
-  app.get('/api/forum/post/:type', verifyLogin, async (req, res) => {
+  app.get('/api/forum/post/:tag', async (req, res) => {
     try {
-      const postType = req.params.type;
-      let posts;
-      if(postType === 'all'){
-        posts = await ForumPost.find().sort({ date: -1 });
-      }else{
-        posts = await ForumPost.findById({type: postType}).sort({ date: -1 });
-      }
-      console.log(posts)
+      const tagType = req.params.tag;
+      let posts = await ForumPost.find({tags: { "$in" : [tagType]} }).sort({ date: -1 });
       res.json(posts);
     } catch (err) {
       // console.error(err.message);

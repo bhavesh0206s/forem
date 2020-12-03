@@ -1,21 +1,29 @@
-import { Layout, Menu, Icon, Breadcrumb, Button } from 'antd';
+import { Layout, Menu, Icon, Breadcrumb, Button, Alert, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
+import { Option } from 'antd/lib/mentions';
 import Modal from 'antd/lib/modal/Modal';
-import { useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { addTag } from '../../redux/actions/forum';
+import { Link } from 'react-router-dom';
+import { fetchTagPost } from '../../redux/actions/forum';
+import { addTag, fetchTags } from '../../redux/actions/tags';
 import './forum.css';
 const { Header, Sider } = Layout;
 
 const TagMenu = () => {
 
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const { isAuthenticated, tags} = useSelector(state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    tags: state.tags
+  }));
 
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
-  const [tag, setTag] = useState('')
+  const [tag, setTag] = useState('');
 
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'
@@ -23,9 +31,9 @@ const TagMenu = () => {
 
   const handleOk = () => {
     setConfirmLoading(true);
-    setVisibleModal(false);
     dispatch(addTag({tag}))
     setConfirmLoading(false);
+    setSuccess(true)
   };
 
   const handleCancel = () => {
@@ -46,26 +54,76 @@ const TagMenu = () => {
       onCancel={handleCancel}
       width={300}
     >
-    <TextArea onChange={handleTag}  placeholder='Create Tag here...' rows={1} />
-  </Modal>
+      <TextArea onChange={handleTag}  placeholder='Create Tag here...' rows={1} />
+      {error && (
+        <Alert
+          message="Error"
+          description={error}
+          type="error"
+          showIcon
+        />
+      )}
+      {success && (
+        <Alert message="Success" type="success" showIcon />
+      )}
+    </Modal>
   )
 
   const renderAddTopic = () => (
-    <div style={{margin: 20}}>
+    <div style={{ margin: isTabletOrMobileDevice ? "1px 5px 0px 0px" : 20}}>
       <Button onClick={() => setVisibleModal(true)}>Add Topic</Button>
     </div>
+  );
+
+  const handleTagSelect = (e) => {
+    const tag = e.key;
+    console.log(e)
+    dispatch(fetchTagPost(tag));
+  }
+
+  const renderTag = () => (
+    <Fragment>
+      {isAuthenticated && renderAddTopic()}
+        <Menu.Item onClick={handleTagSelect} key='All' >
+          <Link to='/home'>
+            All
+          </Link>
+        </Menu.Item>
+      {tags.map((tag, i)=> (
+          <Menu.Item onClick={handleTagSelect} key={tag} >
+            <Link to={`/home/${tag}`}>
+              {tag}
+            </Link>
+          </Menu.Item>
+      ))}
+    </Fragment>
   )
+
+  useEffect(() =>{
+    dispatch(fetchTags());
+  },[]);
 
   return (
     <div>
       {renderAddTopicModal()}
       {isTabletOrMobileDevice ? (
-        <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-            {isAuthenticated && renderAddTopic()}
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">nav 3</Menu.Item>
+        <Header style={{ position: 'fixed', zIndex: 1, width: '100%', display: 'flex' }}>
+          {isAuthenticated && renderAddTopic()}
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
+            <Select defaultValue="All" style={{ width: 120 }}>
+                <Option onClick={handleTagSelect} key={'All'} value="All">
+                  <Link to='/home'> 
+                    All
+                  </Link>
+                </Option>
+              {tags.map((tag, i)=> (
+                <Option key={tag} onClick={handleTagSelect} value={tag}>
+                  <Link to={`/home/${tag}`}>
+                    {tag}
+                  </Link>
+                </Option>
+              ))}
+            </Select>
           </Menu>
         </Header>
       ): (
@@ -77,17 +135,8 @@ const TagMenu = () => {
           left: 0,
         }}
       >
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-          {isAuthenticated && renderAddTopic()}
-          <Menu.Item key="1" >
-            nav 1
-          </Menu.Item>
-          <Menu.Item key="2">
-            nav 2
-          </Menu.Item>
-          <Menu.Item style={{paddingBottom: 150}} key="9">
-            nav 9
-          </Menu.Item>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['All']}>
+          {renderTag()}
         </Menu>
       </Sider>
       )}
