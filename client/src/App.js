@@ -21,10 +21,10 @@ function App() {
   return (
     <div className="App">
       <Router>
-          <Route exact path='/' component={Landing} />
-          <Affix offsetTop={0}>
-            <Navbar />
-          </Affix>
+        <Affix offsetTop={0}>
+          <Navbar />
+        </Affix>
+        <Route exact path='/' component={Landing} />
         <Switch>
           <Route path='/home' component={Home} />
           <Route path='/signin' component={Signin} />
