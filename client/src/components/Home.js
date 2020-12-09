@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch, useLocation } from 'react-router-dom'
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 import { useMediaQuery } from 'react-responsive'
 import './landing.css'
 import PostCard from './forum/PostCard';
@@ -9,6 +9,7 @@ import Post from './forum/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchForumPost } from '../redux/actions/forum';
 import TagMenu from './forum/TagMenu';
+import Loading from './Loading';
 
 const { Content, Footer } = Layout;
 
@@ -16,6 +17,8 @@ const Home = () => {
 
   const dispatch = useDispatch();
   const forum = useSelector(state => state.forum);
+  const loading = useSelector(state => state.loading);
+
   const location = useLocation();
   const [hideHomePost, setHideHomePost] = useState(false);
 
@@ -43,6 +46,7 @@ const Home = () => {
               {hideHomePost ? (
                 <Fragment>
                   <Switch>
+                  <Route path='/home/:username/:postHeading' component={Post} />
                     <Route path='/home/:tag'>
                       <Fragment>
                         {forum.map((post,id) => (
@@ -57,7 +61,6 @@ const Home = () => {
                         ))}
                       </Fragment>
                     </Route>
-                    <Route path='/home/:username/:postHeading' component={Post} />
                   </Switch>
                 </Fragment>
               ): (

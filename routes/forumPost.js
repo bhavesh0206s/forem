@@ -95,20 +95,19 @@ module.exports = (app) => {
   });
 
   app.post(
-    'api/forum/post/comment/:id',
-    verifyLogin,
+    '/api/forum/post/comment/:id',
+    // verifyLogin,
     async (req, res) => {
       try {
-        const user = await User.findById(req.user.id).select('-password');
         const post = await ForumPost.findById(req.params.id);
-  
+        // console.log(post, req.body.reply)
         const newComment = {
-          text: req.body.text,
-          name: user.name,
+          reply: req.body.reply,
+          name: req.user.name,
           user: req.user.id,
         };
   
-        post.comments.unshift(newComment);
+        post.comments.push(newComment);
   
         await post.save();
   

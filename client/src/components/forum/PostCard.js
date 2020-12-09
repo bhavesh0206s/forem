@@ -3,8 +3,13 @@ import { Comment, Tooltip, Avatar, Card, Divider } from 'antd';
 import moment from 'moment';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Loading from '../Loading';
 
 const PostCard = (props) => {
+
+  const loading = useSelector(state => state.loading);
+
   const [likes, setLikes] = useState(0);
 
   const [action, setAction] = useState(null);
@@ -22,7 +27,9 @@ const PostCard = (props) => {
       </span>
     </Tooltip>
   ];
-
+  if(loading){
+    return <Loading />
+  }
   return (
     <div>
       <Card hoverable style={{margin: 10}}>

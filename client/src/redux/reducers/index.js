@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import auth from "./auth";
 import forum from "./forum";
 import tags from './tags'
+import loading from './loading'
 
 // import profile from "./profile";
 // import post from "./post";
@@ -10,5 +11,6 @@ import tags from './tags'
 export default combineReducers({
   auth,
   forum,
-  tags
+  tags,
+  loading
 });
