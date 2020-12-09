@@ -99,12 +99,17 @@ module.exports = (app) => {
     // verifyLogin,
     async (req, res) => {
       try {
+        const name = req.body.replyingTo.name;
+        const content = req.body.replyingTo.content;
         const post = await ForumPost.findById(req.params.id);
-        // console.log(post, req.body.reply)
         const newComment = {
           reply: req.body.reply,
           name: req.user.name,
           user: req.user.id,
+          replyingTo: {
+            name,
+            content
+          }
         };
   
         post.comments.push(newComment);
@@ -112,6 +117,7 @@ module.exports = (app) => {
         await post.save();
   
         res.json(post.comments);
+        
       } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

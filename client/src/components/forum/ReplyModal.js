@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addReply } from "../../redux/actions/forum";
 
-const ReplyModal = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading, id}) => {
+const ReplyModal = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading, id, replyingTo}) => {
 
   const [reply, setReply] = useState('');
 
@@ -14,7 +14,7 @@ const ReplyModal = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLo
  
   const handleOk = () => {
     setConfirmLoading(true);
-    dispatch(addReply({reply}, id))
+    dispatch(addReply({reply, replyingTo}, id))
     setVisibleModal(false);
     setConfirmLoading(false);
   };

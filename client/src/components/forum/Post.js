@@ -6,7 +6,15 @@ import ReplyModal from './ReplyModal';
 
 const MainPost = ({ children, showModal, data }) => (
   <Comment
-    actions={[<span onClick={showModal} key="comment-nested-reply-to">Reply</span>]}
+    actions={
+      [
+        <span 
+          onClick={() => data.content !== undefined ? showModal(data.content, data.name) : showModal(data.reply, data.name)} 
+          key="comment-nested-reply-to">
+            Reply
+        </span>
+      ]
+    }
     author={<a>{data.name}</a>}
     avatar={
       <Avatar
@@ -28,8 +36,12 @@ const Post = (props) => {
   const loading = useSelector(state => state.loading);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
+  const [replyingTo, setReplyingTo] = useState('');
   
-  const showModal = () => {
+  const showModal = (content, name) => {
+    setReplyingTo({
+      name, content
+    })
     setVisibleModal(true);
   };
 
@@ -43,6 +55,7 @@ const Post = (props) => {
         visibleModal={visibleModal}  
         setConfirmLoading={setConfirmLoading}
         setVisibleModal={setVisibleModal}
+        replyingTo={replyingTo}
         id={props.location.data._id}
       />
       <MainPost data={props.location.data} showModal={showModal}>

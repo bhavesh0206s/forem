@@ -44,29 +44,14 @@ const ForumPostSchema = new Schema({
       name: {
         type: String
       },
+      replyingTo: {
+        name: String,
+        content: String,
+      },
       date: {
         type: Date,
         default: Date.now
       },
-      replyToComment: [
-        {
-          user: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-          },
-          reply: {
-            type: String,
-            required: true
-          },
-          name: {
-            type: String
-          },
-          date: {
-            type: Date,
-            default: Date.now
-          }
-        }
-      ],
     }
   ],
   date: {
