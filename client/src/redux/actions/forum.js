@@ -1,6 +1,6 @@
 import axios from "axios";
 import {loading} from "./loading";
-import { ADD_FORUM_POST, SHOW_TAG_POST,SHOW_FORUM_POST, SHOW_MY_FORUM_POST } from "./types";
+import { SHOW_REPLY, SHOW_TAG_POST,SHOW_FORUM_POST, SHOW_FORUM_POSTS,SHOW_MY_FORUM_POST } from "./types";
 
 export const addForumPost = (details, type) => async (dispatch) => {
   const config = {
@@ -20,17 +20,32 @@ export const addForumPost = (details, type) => async (dispatch) => {
   }
 };
 
-export const fetchForumPost = () => async (dispatch) => {
+export const fetchAllForumPosts = () => async (dispatch) => {
   try {
     dispatch(loading(true));
     const res = await axios.get(`/api/forum/post`);
     dispatch({
-      type: SHOW_FORUM_POST,
+      type: SHOW_FORUM_POSTS,
       payload: res.data,
     });
     dispatch(loading(false));
   } catch (err) {
-    console.log("error from add post: ", err);
+    console.log("error from all posts: ", err);
+    dispatch(loading(false));
+  }
+};
+
+export const fetchForumPost = (id) => async (dispatch) => {
+  try {
+    dispatch(loading(true));
+    const res = await axios.get(`/api/forum/post/${id}`);
+    dispatch({
+      type: SHOW_FORUM_POST,
+      payload: res.data
+    })
+    dispatch(loading(false));
+  } catch (err) {
+    console.log("error from post: ", err);
     dispatch(loading(false));
   }
 };
@@ -72,12 +87,27 @@ export const addReply = (reply, id) => async (dispatch) => {
     },
   };
   const body = JSON.stringify(reply);
-  console.log(body)
+  console.log(reply)
   try {
     await axios.post(`/api/forum/post/comment/${id}`, body, config);
-    dispatch(fetchForumPost());
+    dispatch(fetchReply(id))
   } catch (err) {
-    console.log("error from add post: ", err);
+    console.log("error from add reply: ", err);
+  }
+};
+
+export const fetchReply = (id) => async (dispatch) => {
+  try {
+    dispatch(loading(true));
+    const res = await axios.get(`/api/forum/post/comment/${id}`);
+    dispatch({
+      type: SHOW_REPLY,
+      payload: res.data
+    })
+    dispatch(loading(false));
+  } catch (err) {
+    console.log("error from fetch Reply: ", err);
+    dispatch(loading(false));
   }
 };
 

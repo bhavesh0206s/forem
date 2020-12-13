@@ -38,7 +38,7 @@ const PostCard = (props) => {
           author={<a>{props.name}</a>}
           avatar={
             <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            src={props.avatar}
               alt={props.name}
             />
           }

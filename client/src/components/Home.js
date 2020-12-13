@@ -7,7 +7,7 @@ import PostCard from './forum/PostCard';
 import ProfileCard from './profile/ProfileCard';
 import Post from './forum/Post';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchForumPost } from '../redux/actions/forum';
+import { fetchAllForumPosts } from '../redux/actions/forum';
 import TagMenu from './forum/TagMenu';
 import Loading from './Loading';
 
@@ -16,8 +16,7 @@ const { Content, Footer } = Layout;
 const Home = () => {
 
   const dispatch = useDispatch();
-  const forum = useSelector(state => state.forum);
-  const loading = useSelector(state => state.loading);
+  const forum = useSelector(state => state.forum.posts);
 
   const location = useLocation();
   const [hideHomePost, setHideHomePost] = useState(false);
@@ -31,10 +30,10 @@ const Home = () => {
       setHideHomePost(true)
     } else {
       setHideHomePost(false)
-      dispatch(fetchForumPost());
+      dispatch(fetchAllForumPosts());
     }
   }, [location.pathname]);
-
+  
   return (
     <div >  
       <Layout>

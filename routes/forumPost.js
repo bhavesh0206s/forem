@@ -16,6 +16,7 @@ module.exports = (app) => {
           tags: req.body.tags,
           name: req.user.name,
           user: req.user._id, 
+          avatar: req.user.picture,
           username: req.user.username,
           date: new Date(),
         });
@@ -35,6 +36,16 @@ module.exports = (app) => {
     try {
       const posts = await ForumPost.find().sort({ date: -1 });
       res.json(posts);
+    } catch (err) {
+      // console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
+
+  app.get('/api/forum/post/:id', async (req, res) => {
+    try { 
+      const post = await ForumPost.findById(req.params.id);
+      res.json(post);
     } catch (err) {
       // console.error(err.message);
       res.status(500).send('Server Error');
@@ -101,21 +112,40 @@ module.exports = (app) => {
       try {
         const name = req.body.replyingTo.name;
         const content = req.body.replyingTo.content;
+        const avatar = req.body.replyingTo.avatar;
+        
         const post = await ForumPost.findById(req.params.id);
         const newComment = {
           reply: req.body.reply,
           name: req.user.name,
           user: req.user.id,
+          avatar: req.user.picture,
           replyingTo: {
             name,
-            content
+            content,
+            avatar
           }
         };
-  
+
         post.comments.push(newComment);
   
         await post.save();
   
+        res.json(post);
+        
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+      }
+    }
+  );
+
+  app.get(
+    '/api/forum/post/comment/:id',
+    // verifyLogin,
+    async (req, res) => {
+      try {
+        const post = await ForumPost.findById(req.params.id);
         res.json(post.comments);
         
       } catch (err) {

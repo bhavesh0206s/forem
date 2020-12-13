@@ -21,3 +21,9 @@
   text-decoration-color: red;
   text-decoration-thickness: 2px;
 }
+
+.reply__section{
+  background: aquamarine;
+  padding: 10px;
+  margin: 10px;
+}

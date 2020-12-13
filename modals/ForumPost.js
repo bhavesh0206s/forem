@@ -31,6 +31,9 @@ const ForumPostSchema = new Schema({
       }
     }
   ],
+  avatar:{
+    type: String
+  },
   comments: [
     {
       user: {
@@ -44,9 +47,13 @@ const ForumPostSchema = new Schema({
       name: {
         type: String
       },
+      avatar: {
+        type: String
+      },
       replyingTo: {
         name: String,
         content: String,
+        avatar: String,
       },
       date: {
         type: Date,
