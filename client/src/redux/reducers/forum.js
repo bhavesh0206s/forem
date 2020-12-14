@@ -5,7 +5,7 @@ import {
 const initialState = {
   posts: [],
   comments: [],
-  post: []
+  post: {}
 };
 
 // eslint-disable-next-line

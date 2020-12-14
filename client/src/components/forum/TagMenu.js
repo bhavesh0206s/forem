@@ -84,17 +84,17 @@ const TagMenu = () => {
   const renderTag = () => (
     <Fragment>
       {isAuthenticated && renderAddTopic()}
-        <Menu.Item onClick={handleTagSelect} key='All' >
-          <Link to='/home'>
-            All
-          </Link>
-        </Menu.Item>
-      {tags.map((tag, i)=> (
-          <Menu.Item onClick={handleTagSelect} key={tag} >
-            <Link to={`/home/${tag}`}>
-              {tag}
-            </Link>
+        <Link to='/home'>
+          <Menu.Item onClick={handleTagSelect} key='All' >
+              All
           </Menu.Item>
+        </Link>
+      {tags.map((tag, i)=> (
+        <Link to={`/home/${tag}`}>
+          <Menu.Item onClick={handleTagSelect} key={tag} >
+              {tag}
+          </Menu.Item>
+        </Link>
       ))}
     </Fragment>
   )
@@ -111,11 +111,11 @@ const TagMenu = () => {
           {isAuthenticated && renderAddTopic()}
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
             <Select defaultValue="All" style={{ width: 120 }}>
-                <Option onClick={handleTagSelect} key={'All'} value="All">
                   <Link to='/home'> 
+                <Option onClick={handleTagSelect} key={'All'} value="All">
                     All
-                  </Link>
                 </Option>
+                  </Link>
               {tags.map((tag, i)=> (
                 <Option key={tag} onClick={handleTagSelect} value={tag}>
                   <Link to={`/home/${tag}`}>

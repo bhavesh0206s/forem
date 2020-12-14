@@ -55,7 +55,7 @@ const PostCard = (props) => {
                   {props.content}
                 </p>
               </Link>
-              <div style={{display: 'flex', padding: 10}}>
+              <div style={{display: 'flex', flexWrap: 'wrap',padding: 10}}>
                 {props.tags.map((tag, id) => (
                   <p key={id} style={{padding: 5, color: 'grey'}}>#<span>{tag}</span></p>
                 ))}
