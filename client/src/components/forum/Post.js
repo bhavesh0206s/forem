@@ -108,10 +108,6 @@ const Post = (props) => {
   };
 
   useEffect(() => {
-    // console.log(props.location.data)
-    // dispatch(fetchReply(props.location.data._id));
-    // dispatch(fetchForumPost(props.location.data._id))
-    // console.log('fdfdf')
     if(!props.location.data){  
       const id = localStorage.getItem("id");
       setPostId(id)
@@ -127,7 +123,7 @@ const Post = (props) => {
   if(loading){ 
     return <Loading />
   }
-  // console.log(forumPostComments)
+
   return (
     <div>
       <ReplyModal 

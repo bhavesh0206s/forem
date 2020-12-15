@@ -53,7 +53,7 @@ export const fetchForumPost = (id) => async (dispatch) => {
 export const fetchTagPost = (tag) => async (dispatch) => {
   try {
     dispatch(loading(true));
-    const res = await axios.get(`/api/forum/post/${tag}`);
+    const res = await axios.get(`/api/forum/post/tag/${tag}`);
     dispatch({
       type: SHOW_TAG_POST,
       payload: res.data,

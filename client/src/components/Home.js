@@ -33,7 +33,7 @@ const Home = () => {
       dispatch(fetchAllForumPosts());
     }
   }, [location.pathname]);
-  
+  console.log(forum)
   return (
     <div >  
       <Layout>

@@ -52,10 +52,15 @@ module.exports = (app) => {
     }
   });
   
-  app.get('/api/forum/post/:tag', async (req, res) => {
+  app.get('/api/forum/post/tag/:tag', async (req, res) => {
     try {
       const tagType = req.params.tag;
-      let posts = await ForumPost.find({tags: { "$in" : [tagType]} }).sort({ date: -1 });
+      let posts;
+      if(tagType === 'All'){
+        posts = await ForumPost.find().sort({ date: -1 });
+      }else{
+        posts = await ForumPost.find({tags: { "$in" : [tagType]} }).sort({ date: -1 });
+      }
       res.json(posts);
     } catch (err) {
       // console.error(err.message);

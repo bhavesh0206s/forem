@@ -45,6 +45,11 @@ const TagMenu = () => {
     setTag(t);
   }
 
+  const handleTagSelect = (e) => {
+    const tag = e.key || e;
+    dispatch(fetchTagPost(tag));
+  }
+
   const renderAddTopicModal = () => (
     <Modal
       title={'Create New Tag'}
@@ -75,26 +80,20 @@ const TagMenu = () => {
     </div>
   );
 
-  const handleTagSelect = (e) => {
-    const tag = e.key;
-    console.log(e)
-    dispatch(fetchTagPost(tag));
-  }
-
   const renderTag = () => (
     <Fragment>
       {isAuthenticated && renderAddTopic()}
-        <Link to='/home'>
           <Menu.Item onClick={handleTagSelect} key='All' >
+            <Link to='/home'>
               All
+            </Link>
           </Menu.Item>
-        </Link>
       {tags.map((tag, i)=> (
-        <Link to={`/home/${tag}`}>
           <Menu.Item onClick={handleTagSelect} key={tag} >
+            <Link to={`/home/${tag}`}>
               {tag}
+            </Link>
           </Menu.Item>
-        </Link>
       ))}
     </Fragment>
   )
@@ -110,17 +109,13 @@ const TagMenu = () => {
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%', display: 'flex' }}>
           {isAuthenticated && renderAddTopic()}
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
-            <Select defaultValue="All" style={{ width: 120 }}>
-                  <Link to='/home'> 
-                <Option onClick={handleTagSelect} key={'All'} value="All">
+            <Select onChange={handleTagSelect} defaultValue="All" style={{ width: 120 }}>
+                <Option  key={'All'} value="All">
                     All
                 </Option>
-                  </Link>
               {tags.map((tag, i)=> (
-                <Option key={tag} onClick={handleTagSelect} value={tag}>
-                  <Link to={`/home/${tag}`}>
+                <Option key={tag} value={tag}>
                     {tag}
-                  </Link>
                 </Option>
               ))}
             </Select>
