@@ -18,7 +18,7 @@ const ReplyModal = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLo
       setError('Reply is Empty!');
     }else{
       setConfirmLoading(true);
-      // dispatch(addReply({reply, replyingTo}, id));
+      dispatch(addReply({reply, replyingTo}, id));
       setConfirmLoading(false);
       setSuccess(true)
     }
