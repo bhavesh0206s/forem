@@ -8,7 +8,7 @@ import { fetchMyForumPost } from '../../redux/actions/forum';
 
 const { Meta } = Card;
 
-const ProfileCard = ({setIsYourPostClicked}) => {
+const ProfileCard = () => {
   const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
   const isTabletOrMobileDevice = useMediaQuery({

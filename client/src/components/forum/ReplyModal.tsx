@@ -1,9 +1,9 @@
-import { Alert, Input } from "antd";
+import { Alert } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Modal from "antd/lib/modal/Modal";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addReply, fetchReply } from "../../redux/actions/forum";
+import { addReply } from "../../redux/actions/forum";
 
 const ReplyModal = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading, id, replyingTo}) => {
 
