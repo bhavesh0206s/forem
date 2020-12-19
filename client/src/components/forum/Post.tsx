@@ -5,7 +5,23 @@ import { fetchForumPost, fetchReply } from '../../redux/actions/forum';
 import Loading from '../Loading';
 import ReplyModal from './ReplyModal';
 
-const MainPost = ({ children, showModal, data }) => {
+interface PostProps {
+  children?: () => JSX.Element | null,
+  showModal : (content: string, name: string, avatar: string) => void,
+  data: {
+    content: string,
+    name: string,
+    avatar: string,
+    reply: string,
+    replyingTo: {
+      name: string;
+      avatar: string;
+      content: string;
+  }
+  },
+}
+
+const MainPost: React.FC<PostProps> = ({ children, showModal, data }) => {
   return(
     <Comment
       style={{backgroundColor: 'white'}}
@@ -35,7 +51,7 @@ const MainPost = ({ children, showModal, data }) => {
     </Comment>
 );}
 
-const SubReply = ({ children, showModal, data }) => {
+const SubReply: React.FC<PostProps> = ({ children, showModal, data }) => {
   return(
   <Comment 
     className='reply__section'
@@ -86,10 +102,26 @@ const SubReply = ({ children, showModal, data }) => {
   </Comment>
 );}
 
-const Post = (props) => {
+
+interface IRootState {
+  loading: boolean,
+  forum: {
+    comments: any,
+    post: any
+  }
+}
+
+interface IReplyinTo{
+  name: string,
+  content: string,
+  avatar: string,
+}
+
+
+const Post: React.FC = (props: any) => {
   const dispatch = useDispatch();
 
-  const { loading , forumPostComments,forumPost } = useSelector(state => ({
+  const { loading , forumPostComments, forumPost } = useSelector((state: IRootState)=> ({
     loading: state.loading,
     forumPostComments: state.forum.comments,
     forumPost: state.forum.post
@@ -97,10 +129,10 @@ const Post = (props) => {
 
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
-  const [replyingTo, setReplyingTo] = useState('');
-  const [postId, setPostId] = useState('');
+  const [replyingTo, setReplyingTo] = useState<IReplyinTo>();
+  const [postId, setPostId] = useState<string | null>('');
   
-  const showModal = (content, name, avatar='nothing') => {
+  const showModal = (content: string, name: string, avatar: string='nothing') => {
     setReplyingTo({
       name, content, avatar
     })
@@ -109,7 +141,7 @@ const Post = (props) => {
 
   useEffect(() => {
     if(!props.location.data){  
-      const id = localStorage.getItem("id");
+      const id: string | null = localStorage.getItem("id");
       setPostId(id)
       dispatch(fetchReply(id));
       dispatch(fetchForumPost(id));
@@ -135,7 +167,7 @@ const Post = (props) => {
         id={!props.location.data ? postId : props.location.data._id}
       />
       <MainPost data={forumPost} showModal={showModal}>
-        {forumPostComments.map((comment) => (
+        {forumPostComments.map((comment: any) => (
           <SubReply data={comment} showModal={showModal}/>
         ))}
       </MainPost>

@@ -9,9 +9,15 @@ import { Link, useLocation, withRouter } from 'react-router-dom';
 import AddPost from '../forum/AddPost';
 import { useSelector } from 'react-redux';
 
+interface IRootState {
+  auth :{
+    isAuthenticated : boolean
+  },
+}
+
 const Navbar = () => {
   const location = useLocation();
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state: IRootState) => state.auth.isAuthenticated);
 
   const [visible, setVisible] = useState(false); 
   const [confirmLoading, setConfirmLoading] = useState(false);

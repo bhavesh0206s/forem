@@ -8,8 +8,14 @@ import { fetchMyForumPost } from '../../redux/actions/forum';
 
 const { Meta } = Card;
 
+interface IRootState {
+  auth: {
+    user: any
+  }
+}
+
 const ProfileCard = () => {
-  const user = useSelector(state => state.auth.user);
+  const user = useSelector((state: IRootState) => state.auth.user);
   const dispatch = useDispatch();
   const isTabletOrMobileDevice = useMediaQuery({
     query: '(max-device-width: 1224px)'

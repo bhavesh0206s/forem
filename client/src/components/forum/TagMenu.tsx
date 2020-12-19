@@ -1,4 +1,4 @@
-import { Layout, Menu, Icon, Breadcrumb, Button, Alert, Select } from 'antd';
+import { Layout, Menu, Button, Alert, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { Option } from 'antd/lib/mentions';
 import Modal from 'antd/lib/modal/Modal';
@@ -11,10 +11,24 @@ import { addTag, fetchTags } from '../../redux/actions/tags';
 import './forum.css';
 const { Header, Sider } = Layout;
 
+export interface ModalPorps {
+  setVisibleModal: (val: boolean) => void,
+  setConfirmLoading: (val: boolean) => void,
+  visibleModal: boolean,
+  confirmLoading: boolean,
+}
+
+interface IRootState {
+  auth :{
+    isAuthenticated : boolean
+  },
+  tags: string[],
+}
+
 const TagMenu = () => {
 
   const dispatch = useDispatch();
-  const { isAuthenticated, tags} = useSelector(state => ({
+  const { isAuthenticated, tags} = useSelector((state: IRootState) => ({
     isAuthenticated: state.auth.isAuthenticated,
     tags: state.tags
   }));
@@ -40,12 +54,12 @@ const TagMenu = () => {
     setVisibleModal(false);
   };
 
-  const handleTag = (e) => {
+  const handleTag = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let t = e.target.value.replace(/ +/g, "");
     setTag(t);
   }
 
-  const handleTagSelect = (e) => {
+  const handleTagSelect = (e:any) => {
     const tag = e.key || e;
     dispatch(fetchTagPost(tag));
   }

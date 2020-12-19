@@ -2,7 +2,7 @@ import axios from "axios";
 import {loading} from "./loading";
 import { SHOW_REPLY, SHOW_TAG_POST,SHOW_FORUM_POST, SHOW_FORUM_POSTS,SHOW_MY_FORUM_POST } from "./types";
 
-export const addForumPost = (details, type) => async (dispatch) => {
+export const addForumPost = (details) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",

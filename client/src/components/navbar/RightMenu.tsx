@@ -7,10 +7,17 @@ const MenuItemGroup = Menu.ItemGroup;
 
 const { useBreakpoint } = Grid;
 
+interface IRootState {
+  auth: {
+    isAuthenticated: boolean,
+    user: any
+  }
+}
+
 const RightMenu = () => {
   const { md } = useBreakpoint();
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state: IRootState) => state.auth);
   const isAuthenticated = auth.isAuthenticated;
   const user = auth.user;
 

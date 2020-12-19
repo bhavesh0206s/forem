@@ -14,3 +14,10 @@ export default combineReducers({
   tags,
   loading
 });
+
+const rootReducer = combineReducers({
+  system: systemReducer,
+  chat: chatReducer
+})
+
+export type RootState = ReturnType<typeof rootReducer>

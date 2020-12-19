@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { addForumPost } from '../../redux/actions/forum';
 import { fetchTags } from '../../redux/actions/tags';
+import { ModalPorps } from './TagMenu';
 const { TextArea } = Input;
 
 const errors = {
@@ -13,13 +14,19 @@ const errors = {
   tag: 'No Tag Selected'
 }
 
-const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading}) => {
+interface IRootState {
+  tags: Array<string>,
+}
+
+type ISelectedTags = string[];
+
+const AddPost: React.FC<ModalPorps> = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading}) => {
 
   const dispatch = useDispatch();
   
-  const tags = useSelector(state => state.tags);
+  const tags = useSelector((state: IRootState) => state.tags);
 
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState<ISelectedTags>([]);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -46,13 +53,13 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
     }
   };
 
-  const handleRemoveTag = (e) =>{
-    const removeTag = e.target.textContent;
-    const newTags = selectedTags.filter(tag => tag !== removeTag);
+  const handleRemoveTag = (e: React.MouseEvent<HTMLElement, MouseEvent>) =>{
+    const removeTag = e.target as HTMLElement;
+    const newTags = selectedTags.filter(tag => tag !== removeTag.textContent);
     setSelectedTags(newTags)
   }
 
-  const handleSelectedTags = (e) =>{
+  const handleSelectedTags = (e : any) =>{
     let tag = e.key;
     if(selectedTags.indexOf(tag) === -1){
       setSelectedTags([...selectedTags, tag]);
@@ -60,11 +67,11 @@ const AddPost = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoadi
     }
   }
 
-  const handleTitle = (e) =>{
+  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) =>{
     setTitle(e.target.value)
     setError('')
   }
-  const handleContent = (e) =>{
+  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) =>{
     setContent(e.target.value)
     setError('')
   }

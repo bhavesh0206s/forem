@@ -15,11 +15,11 @@ const Signup = () => {
         <p style={{fontSize: '1.2em'}}>Forum for everyone</p>
         <a href='/auth/google'>
           <div className='google-signup'>
-            <div class="google-btn">
-              <div class="google-icon-wrapper">
-                <img class="google-icon" alt="signup" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+            <div className="google-btn">
+              <div className="google-icon-wrapper">
+                <img className="google-icon" alt="signup" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
               </div>
-                <p class="btn-text"><b>Sign un with Google</b></p>
+                <p className="btn-text"><b>Sign un with Google</b></p>
             </div>
           </div>
         </a>

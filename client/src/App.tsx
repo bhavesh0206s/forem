@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from './redux/actions/auth';
 
-function App() {
+const App: React.FC = () => {
 
   const dispatch = useDispatch();
 

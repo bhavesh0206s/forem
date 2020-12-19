@@ -5,7 +5,20 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addReply } from "../../redux/actions/forum";
 
-const ReplyModal = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading, id, replyingTo}) => {
+interface Porps{
+  setVisibleModal: (val: boolean) => void,
+  setConfirmLoading: (val: boolean) => void,
+  visibleModal: boolean,
+  confirmLoading: boolean,
+  id: string,
+  replyingTo : {
+    name: string | undefined, 
+    content: string, 
+    avatar: string
+  } | undefined
+}
+
+const ReplyModal: React.FC<Porps> = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading, id, replyingTo}) => {
 
   const [reply, setReply] = useState('');
   const [error, setError] = useState('');
@@ -31,14 +44,14 @@ const ReplyModal = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLo
     setReply('')
   };
 
-  const handleReply = (e) => {
+  const handleReply = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReply(e.target.value)
     setError('');
   }
 
   return (
     <Modal
-      title={`Reply to ${replyingTo.name}`}
+      title={`Reply to ${ replyingTo!.name}`}
       visible={visibleModal}
       onOk={handleOk}
       confirmLoading={confirmLoading}

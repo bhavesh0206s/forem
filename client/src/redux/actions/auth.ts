@@ -3,9 +3,11 @@ import {
   FETCH_USER
 } from './types'
 import axios from 'axios'
+import { Action } from 'redux'
+import { ThunkAction } from 'redux-thunk'
 // import { setAlert } from "./alert";
 
-export const fetchUser =  () => async dispatch => {
+export const fetchUser =  (): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
   try {
     const res = await axios.get('/api/current_user');
     dispatch({

@@ -12,11 +12,18 @@ const validateMessages = {
   required: '${label} is required!',
 };
 
+interface Values {
+  user: {
+    bio: string,
+    username: string,
+  }
+}
+
 const UserForm = () => {
 
   const dispatch = useDispatch();
 
-  const onFinish = values => {
+  const onFinish = (values: Values) => {
     const {username, bio} = values.user;
     dispatch(saveUsernameAndBio(username, bio));
   };

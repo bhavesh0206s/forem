@@ -9,14 +9,30 @@ import Post from './forum/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllForumPosts } from '../redux/actions/forum';
 import TagMenu from './forum/TagMenu';
-import Loading from './Loading';
 
 const { Content, Footer } = Layout;
 
-const Home = () => {
+interface ForumProps {
+  forum: {
+    posts: {
+      id: string,
+      comments: object,
+      user: string,
+      title: string,
+      content: string,
+      tags: Array<string>,
+      name: string,
+      username: string,
+      avatar: string,
+    }[]
+  }
+}
+
+
+const Home: React.FC = () => {
 
   const dispatch = useDispatch();
-  const forum = useSelector(state => state.forum.posts);
+  const forum = useSelector((state: ForumProps) => state.forum.posts);
 
   const location = useLocation();
   const [hideHomePost, setHideHomePost] = useState(false);
@@ -33,7 +49,7 @@ const Home = () => {
       dispatch(fetchAllForumPosts());
     }
   }, [location.pathname]);
-  console.log(forum)
+
   return (
     <div >  
       <Layout>

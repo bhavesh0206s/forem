@@ -6,13 +6,17 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loading from '../Loading';
 
-const PostCard = (props) => {
+interface IRootState {
+  loading: boolean
+}
 
-  const loading = useSelector(state => state.loading);
+const PostCard: React.FC = (props: any) => {
+
+  const loading = useSelector((state: IRootState) => state.loading);
 
   const [likes, setLikes] = useState(0);
 
-  const [action, setAction] = useState(null);
+  const [action, setAction] = useState<string | null>(null);
 
   const like = () => {
     setLikes(1);
@@ -47,7 +51,7 @@ const PostCard = (props) => {
               <Link style={{color: 'inherit'}} 
                 to={{
                   pathname: `/home/${props.username}/${props.title.toLowerCase().split(' ').join('-')}`,
-                  data: props
+                  // data: props
                 }}
               >
                 <h1 style={{fontSize: '1.5em'}}>{props.title}</h1>
@@ -56,7 +60,7 @@ const PostCard = (props) => {
                 </p>
               </Link>
               <div style={{display: 'flex', flexWrap: 'wrap',padding: 10}}>
-                {props.tags.map((tag, id) => (
+                {props.tags.map((tag: string, id: number) => (
                   <p key={id} style={{padding: 5, color: 'grey'}}>#<span>{tag}</span></p>
                 ))}
               </div>
