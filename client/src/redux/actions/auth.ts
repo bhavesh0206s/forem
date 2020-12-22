@@ -5,6 +5,7 @@ import {
 import axios from 'axios'
 import { Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
+import { RootState } from '../reducers'
 // import { setAlert } from "./alert";
 
 export const fetchUser =  (): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
@@ -19,15 +20,22 @@ export const fetchUser =  (): ThunkAction<void, RootState, unknown, Action<strin
   }
 }
 
-export const saveUsernameAndBio = (username, bio) => async dispatch =>{
+export const saveUsernameAndBio = (username: string, bio: string): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch =>{
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({username, bio});
+
   try {
-    const res = await axios.post('/api/auth/signup-form', {username, bio});
+    const res = await axios.post('/api/auth/signup-form', body, config);
     console.log(res.data);
   } catch (error) {
     console.log('error from saveUsernameAndBio: ', error)
   }
 }
 
-export const logout = () => async dispatch => {
+export const logout = (): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
   dispatch({ type: LOGOUT })
 }

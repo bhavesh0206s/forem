@@ -105,10 +105,13 @@ const SubReply: React.FC<PostProps> = ({ children, showModal, data }) => {
 
 interface IRootState {
   loading: boolean,
+  auth: {
+    isAuthenticated: boolean
+  },
   forum: {
     comments: any,
     post: any
-  }
+  },
 }
 
 interface IReplyinTo{
@@ -121,7 +124,8 @@ interface IReplyinTo{
 const Post: React.FC = (props: any) => {
   const dispatch = useDispatch();
 
-  const { loading , forumPostComments, forumPost } = useSelector((state: IRootState)=> ({
+  const {isAuthenticated, loading , forumPostComments, forumPost } = useSelector((state: IRootState)=> ({
+    isAuthenticated: state.auth.isAuthenticated,
     loading: state.loading,
     forumPostComments: state.forum.comments,
     forumPost: state.forum.post
@@ -129,14 +133,14 @@ const Post: React.FC = (props: any) => {
 
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
-  const [replyingTo, setReplyingTo] = useState<IReplyinTo>();
+  const [replyingTo, setReplyingTo] = useState<IReplyinTo | string>('');
   const [postId, setPostId] = useState<string | null>('');
-  
+
   const showModal = (content: string, name: string, avatar: string='nothing') => {
     setReplyingTo({
       name, content, avatar
     })
-    setVisibleModal(true);
+    setVisibleModal(isAuthenticated ? true: false);
   };
 
   useEffect(() => {
@@ -155,17 +159,19 @@ const Post: React.FC = (props: any) => {
   if(loading){ 
     return <Loading />
   }
-
   return (
     <div>
-      <ReplyModal 
-        confirmLoading={confirmLoading}
-        visibleModal={visibleModal}  
-        setConfirmLoading={setConfirmLoading}
-        setVisibleModal={setVisibleModal}
-        replyingTo={replyingTo}
-        id={!props.location.data ? postId : props.location.data._id}
-      />
+      {isAuthenticated && (
+        <ReplyModal 
+          confirmLoading={confirmLoading}
+          visibleModal={visibleModal}  
+          setConfirmLoading={setConfirmLoading}
+          setVisibleModal={setVisibleModal}
+          replyingTo={replyingTo}
+          isAuthenticated={isAuthenticated}
+          id={!props.location.data ? postId : props.location.data._id}
+        />
+      )}
       <MainPost data={forumPost} showModal={showModal}>
         {forumPostComments.map((comment: any) => (
           <SubReply data={comment} showModal={showModal}/>

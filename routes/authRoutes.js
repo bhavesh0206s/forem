@@ -23,7 +23,7 @@ module.exports = (app)=>{
     }
   });
 
-  app.post('/api/auth/signup-form', verifyLogin , async (req, res) =>{
+  app.post('/api/auth/signup-form' , async (req, res) =>{
     try {
       const user = await User.findById(req.user._id);
       user.username = req.body.username;

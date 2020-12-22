@@ -1,26 +1,35 @@
 import axios from "axios";
 import {loading} from "./loading";
 import { SHOW_REPLY, SHOW_TAG_POST,SHOW_FORUM_POST, SHOW_FORUM_POSTS,SHOW_MY_FORUM_POST } from "./types";
+import { Action } from 'redux'
+import { ThunkAction } from 'redux-thunk'
+import { RootState } from '../reducers'
 
-export const addForumPost = (details) => async (dispatch) => {
+export interface IAddForumPost {
+  title: string,
+  content: string
+  tags: Array<string>,
+}
+
+export const addForumPost = (details: IAddForumPost): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
   const body = JSON.stringify(details);
-  console.log(body)
+
   try {
     await axios.post(`/api/forum/post`, body, config);
     
-    dispatch(fetchForumPost());
+    dispatch(fetchAllForumPosts());
 
   } catch (err) {
     console.log("error from add post: ", err);
   }
 };
 
-export const fetchAllForumPosts = () => async (dispatch) => {
+export const fetchAllForumPosts = (): ThunkAction<void, RootState, unknown, Action<string>>  => async (dispatch) => {
   try {
     dispatch(loading(true));
     const res = await axios.get(`/api/forum/post`);
@@ -35,7 +44,7 @@ export const fetchAllForumPosts = () => async (dispatch) => {
   }
 };
 
-export const fetchForumPost = (id) => async (dispatch) => {
+export const fetchForumPost = (id: string | null): ThunkAction<void, RootState, unknown, Action<string>>  => async (dispatch) => {
   try {
     dispatch(loading(true));
     const res = await axios.get(`/api/forum/post/${id}`);
@@ -50,7 +59,7 @@ export const fetchForumPost = (id) => async (dispatch) => {
   }
 };
 
-export const fetchTagPost = (tag) => async (dispatch) => {
+export const fetchTagPost = (tag: string): ThunkAction<void, RootState, unknown, Action<string>>  => async (dispatch) => {
   try {
     dispatch(loading(true));
     const res = await axios.get(`/api/forum/post/tag/${tag}`);
@@ -65,7 +74,7 @@ export const fetchTagPost = (tag) => async (dispatch) => {
   }
 };
 
-export const fetchMyForumPost = (id) => async (dispatch) => {
+export const fetchMyForumPost = (id: string) : ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     dispatch(loading(true));
     const res = await axios.get(`/api/forum/my-post/${id}`);
@@ -80,14 +89,23 @@ export const fetchMyForumPost = (id) => async (dispatch) => {
   }
 };
 
-export const addReply = (reply, id) => async (dispatch) => {
+interface IAddReply{
+  reply: string
+  replyingTo : {
+    name: string | undefined, 
+    content: string, 
+    avatar: string
+  } | undefined
+}
+
+export const addReply = (reply: IAddReply, id: string) : ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
   const body = JSON.stringify(reply);
-  console.log(reply)
+
   try {
     await axios.post(`/api/forum/post/comment/${id}`, body, config);
     dispatch(fetchReply(id))
@@ -96,7 +114,7 @@ export const addReply = (reply, id) => async (dispatch) => {
   }
 };
 
-export const fetchReply = (id) => async (dispatch) => {
+export const fetchReply = (id: string | null): ThunkAction<void, RootState, unknown, Action<string>>  => async (dispatch) => {
   try {
     dispatch(loading(true));
     const res = await axios.get(`/api/forum/post/comment/${id}`);

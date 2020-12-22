@@ -3,7 +3,7 @@ import { Modal, Button, Input, Menu, Dropdown, Tag, Alert } from 'antd';
 import { useDebugValue, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { addForumPost } from '../../redux/actions/forum';
+import { addForumPost, IAddForumPost } from '../../redux/actions/forum';
 import { fetchTags } from '../../redux/actions/tags';
 import { ModalPorps } from './TagMenu';
 const { TextArea } = Input;
@@ -47,7 +47,8 @@ const AddPost: React.FC<ModalPorps> = ({visibleModal, confirmLoading, setVisible
       setError(errors.tag);
     }else{
       setConfirmLoading(true);
-      dispatch(addForumPost({title, content, tags: selectedTags}))
+      let details: IAddForumPost = {title, content, tags: selectedTags}
+      dispatch(addForumPost(details))
       setConfirmLoading(false);
       setSuccess(true);
     }

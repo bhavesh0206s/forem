@@ -9,6 +9,7 @@ import Post from './forum/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllForumPosts } from '../redux/actions/forum';
 import TagMenu from './forum/TagMenu';
+import PrivateRoute from '../PrivateRoute';
 
 const { Content, Footer } = Layout;
 
@@ -69,13 +70,13 @@ const Home: React.FC = () => {
                         ))}
                       </Fragment>
                     </Route>
-                    <Route exact path='/home/my-posts'> 
+                    <PrivateRoute exact path='/home/my-posts'> 
                       <Fragment>
                         {forum.map((post,id) => (
                           <PostCard key={id} {...post} /> 
                         ))}
                       </Fragment>
-                    </Route>
+                    </PrivateRoute>
                   </Switch>
                 </Fragment>
               ): (

@@ -16,8 +16,10 @@ export default combineReducers({
 });
 
 const rootReducer = combineReducers({
-  system: systemReducer,
-  chat: chatReducer
+  auth,
+  forum,
+  tags,
+  loading
 })
 
 export type RootState = ReturnType<typeof rootReducer>

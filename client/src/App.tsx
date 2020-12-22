@@ -7,7 +7,7 @@ import Navbar from './components/navbar';
 import Landing from './components/Landing';
 import UserForm from './components/auth/UserForm';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchUser } from './redux/actions/auth';
 
 const App: React.FC = () => {

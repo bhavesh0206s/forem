@@ -11,14 +11,11 @@ interface Porps{
   visibleModal: boolean,
   confirmLoading: boolean,
   id: string,
-  replyingTo : {
-    name: string | undefined, 
-    content: string, 
-    avatar: string
-  } | undefined
+  isAuthenticated: boolean,
+  replyingTo : any
 }
 
-const ReplyModal: React.FC<Porps> = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading, id, replyingTo}) => {
+const ReplyModal: React.FC<Porps> = ({visibleModal, confirmLoading, setVisibleModal, setConfirmLoading, id, replyingTo, isAuthenticated}) => {
 
   const [reply, setReply] = useState('');
   const [error, setError] = useState('');
@@ -51,7 +48,7 @@ const ReplyModal: React.FC<Porps> = ({visibleModal, confirmLoading, setVisibleMo
 
   return (
     <Modal
-      title={`Reply to ${ replyingTo!.name}`}
+      title={`Reply to ${ isAuthenticated ? replyingTo.name : '' }`}
       visible={visibleModal}
       onOk={handleOk}
       confirmLoading={confirmLoading}

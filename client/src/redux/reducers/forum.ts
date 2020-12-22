@@ -8,8 +8,13 @@ const initialState = {
   post: {}
 };
 
+export interface IActionType{
+  type: string,
+  payload: any
+}
+
 // eslint-disable-next-line
-export default (state = initialState, action) => {
+export default (state = initialState, action: IActionType) => {
 
   const { type, payload } = action;
 
