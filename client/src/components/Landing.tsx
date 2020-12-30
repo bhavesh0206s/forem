@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logo from '../assets/logo.png';
 
 const Landing = () => {
   return (
@@ -6,7 +7,7 @@ const Landing = () => {
       <div className="Container">
         <div className="landing-nav">
             <div className="landing-logo">
-                LOGO
+                <img src={Logo} width='200' alt="logo"/>
             </div>
         </div>
         <div className="landing-header">

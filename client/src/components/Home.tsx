@@ -70,13 +70,13 @@ const Home: React.FC = () => {
                         ))}
                       </Fragment>
                     </Route>
-                    <PrivateRoute exact path='/home/my-posts'> 
+                    <Route exact path='/home/my-posts'> 
                       <Fragment>
                         {forum.map((post,id) => (
                           <PostCard key={id} {...post} /> 
                         ))}
                       </Fragment>
-                    </PrivateRoute>
+                    </Route>
                   </Switch>
                 </Fragment>
               ): (

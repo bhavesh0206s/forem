@@ -74,7 +74,7 @@ const SubReply: React.FC<PostProps> = ({ children, showModal, data }) => {
     }
   >
     <Comment
-      style={{backgroundColor: 'white'}}
+      style={{backgroundColor: 'white',padding: 10}}
       actions={
         [
           <span 

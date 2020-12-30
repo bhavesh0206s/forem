@@ -5,7 +5,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 interface Props {
   exact?: boolean;
-  path: string;
+  path?: string;
   component: React.ComponentType<any>;
 }
 

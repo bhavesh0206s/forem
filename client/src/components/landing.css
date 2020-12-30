@@ -1,11 +1,11 @@
-.landing__content{
+.landing__content {
   margin: 20px 100px;
   display: flex;
   flex-direction: row;
   background: aliceblue;
 }
 
-.left__side-menu{
+.left__side-menu {
   padding-bottom: 2em;
 }
 
@@ -26,7 +26,7 @@
 }
 
 @media (max-width: 767px) {
-  .landing__content{
+  .landing__content {
     margin: 20px 10px 20px 0px;
   }
 }
@@ -34,7 +34,8 @@
 .wrapper {
   width: auto;
   height: 100vh;
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://gdurl.com/gJJK");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://149351115.v2.pressablecdn.com/wp-content/uploads/2020/03/Extended-trial-blog-post@2x-1200x628.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -59,6 +60,7 @@
   align-items: center;
   padding: 0 50px;
 }
+
 .landing-logo {
   font-family: "Abel", sans-serif;
   font-size: 2.5rem;
@@ -66,6 +68,7 @@
   letter-spacing: 0.7rem;
   color: white;
   margin: 4%;
+  padding-top: 10px;
 }
 
 .landing-header {
@@ -90,7 +93,7 @@
   font-weight: 600;
   letter-spacing: 0.15rem;
   color: black;
-  background-color: #fff200;
+  background-color: #00adfd;
   padding: 20px 30px;
   margin: 50px 5px 0;
   border: none;
